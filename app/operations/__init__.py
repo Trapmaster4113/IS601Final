@@ -12,7 +12,7 @@ Functions:
 - subtract(a: Union[int, float], b: Union[int, float]) -> Union[int, float]: Returns the difference when b is subtracted from a.
 - multiply(a: Union[int, float], b: Union[int, float]) -> Union[int, float]: Returns the product of a and b.
 - divide(a: Union[int, float], b: Union[int, float]) -> float: Returns the quotient when a is divided by b. Raises ValueError if b is zero.
-
+- exponent(a: Union[int, float], b: Union[int, float]) -> float: Returns the result when a is raised to the power of b. Raises ValueError if b is negative
 Usage:
 These functions can be imported and used in other modules or integrated into APIs
 to perform arithmetic operations based on user input.
@@ -117,4 +117,34 @@ def divide(a: Number, b: Number) -> float:
     
     # Perform division of a by b and return the result as a float
     result = a / b
+    return result
+def exponent(a: Number, b: Number) -> float:
+    """
+    Raise the first number to the power of the second number and return the result
+
+    Parameters:
+    - a (int or float): The Base
+    - b (int or float): The power
+
+    Returns:
+    - float: the result of a raised to the power of b.
+
+    Raises:
+    - ValueError: if b is negative, as cannto calculate that
+
+    Example:
+    >>> exponent(2,3)
+    8.0
+    >>> exponent(1.5,2)
+    2.25
+    >>>exponent(1,-1)
+        ...
+    ValueError: Cannot raise to a negative power
+    """
+    # Check if the power is negative
+    if b < 0:
+        # Raise a ValueError with a descriptive message
+        raise ValueError("Cannot raise to a negative power")
+    # Raises the power of A by B and return the result as a float
+    result = a ** b
     return result

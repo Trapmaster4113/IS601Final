@@ -178,6 +178,7 @@ class AbstractCalculation:
             'subtraction': Subtraction,
             'multiplication': Multiplication,
             'division': Division,
+            'exponent': Exponent,
         }
         calculation_class = calculation_classes.get(calculation_type.lower())
         if not calculation_class:
@@ -348,6 +349,42 @@ class Division(Calculation):
             raise ValueError("Inputs must be a list of numbers.")
         if len(self.inputs) < 2:
             raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            if value == 0:
+                raise ValueError("Cannot divide by zero.")
+            result /= value
+        return result
+class Exponent(Calculation):
+    """
+    Exponent calculation subclass.
+    Implements sequential exponent starting from the first number.
+    Examples:
+        [3, 2, 2] -> 3 ** 2 ** 2 = 81
+        [2, 3, 2] -> 2 ** 3 ** 2 = 64
+    
+    Special case handling:
+        - Exponents with a negative number power raises a ValueError
+    """
+    __mapper_args__ = {"polymorphic_identity": "exponent"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the result of powering the first value by all subsequent values.
+        
+        Takes the first number and divides by all remaining numbers sequentially.
+        Includes validation to prevent raise to the power of a negative number.
+        
+        Returns:
+            float: The result of the division sequence
+            
+        Raises: 
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided, or if attempting to raise the base to the power of a negative power
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two number.")
         result = self.inputs[0]
         for value in self.inputs[1:]:
             if value == 0:
