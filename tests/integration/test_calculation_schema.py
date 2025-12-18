@@ -54,6 +54,32 @@ def test_calculation_create_invalid_inputs():
     # Ensure that our custom error message is present (case-insensitive)
     assert "input should be a valid list" in error_message.lower(), error_message
 
+def test_calculation_create_invalid_inputs2():
+    """Test CalculationCreate fails if 'inputs' is not a list of 2 or more floats."""
+    data = {
+        "type": "division",
+        "inputs": [10],
+        "user_id": uuid4()
+    }
+    with pytest.raises(ValidationError) as exc_info:
+        CalculationCreate(**data)
+    error_message = str(exc_info.value)
+    # Ensure that our custom error message is present (case-insensitive)
+    assert "list should have at least 2 items after validation" in error_message.lower(), error_message
+
+def test_calculation_create_invalid_inputs0():
+    """Test CalculationCreate fails if dividing by 0."""
+    data = {
+        "type": "division",
+        "inputs": [1,1,0],
+        "user_id": uuid4()
+    }
+    with pytest.raises(ValidationError) as exc_info:
+        CalculationCreate(**data)
+    error_message = str(exc_info.value)
+    # Ensure that our custom error message is present (case-insensitive)
+    assert "cannot divide by zero" in error_message.lower(), error_message
+
 def test_calculation_create_unsupported_type():
     """Test CalculationCreate fails if an unsupported calculation type is provided."""
     data = {
