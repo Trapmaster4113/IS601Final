@@ -48,7 +48,7 @@ def test_health_endpoint(base_url: str):
     response = requests.get(url)
     assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}. Response: {response.text}"
     assert response.json() == {"status": "ok"}, "Unexpected response from /health."
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_user_registration(base_url: str):
     url = f"{base_url}/auth/register"
     payload = {
@@ -70,7 +70,7 @@ def test_user_registration(base_url: str):
     assert data["last_name"] == "Smith"
     assert data["is_active"] is True
     assert data["is_verified"] is False
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_user_login(base_url: str):
     reg_url = f"{base_url}/auth/register"
     login_url = f"{base_url}/auth/login"
@@ -134,7 +134,7 @@ def test_user_login(base_url: str):
 # Calculations Endpoints Integration Tests
 # ---------------------------------------------------------------------------
 # Note: All calculation creation requests now use the /calculations endpoint (not /calculations/add)
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_create_calculation_addition(base_url: str):
     user_data = {
         "first_name": "Calc",
@@ -157,7 +157,7 @@ def test_create_calculation_addition(base_url: str):
     assert response.status_code == 201, f"Addition calculation creation failed: {response.text}"
     data = response.json()
     assert "result" in data and data["result"] == 15.5, f"Expected result 15.5, got {data.get('result')}"
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_create_calculation_subtraction(base_url: str):
     user_data = {
         "first_name": "Calc",
@@ -181,7 +181,7 @@ def test_create_calculation_subtraction(base_url: str):
     data = response.json()
     # Expected result: 10 - 3 - 2 = 5
     assert "result" in data and data["result"] == 5, f"Expected result 5, got {data.get('result')}"
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_create_calculation_multiplication(base_url: str):
     user_data = {
         "first_name": "Calc",
@@ -205,7 +205,7 @@ def test_create_calculation_multiplication(base_url: str):
     data = response.json()
     # Expected result: 2 * 3 * 4 = 24
     assert "result" in data and data["result"] == 24, f"Expected result 24, got {data.get('result')}"
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_create_calculation_division(base_url: str):
     user_data = {
         "first_name": "Calc",
@@ -229,7 +229,7 @@ def test_create_calculation_division(base_url: str):
     data = response.json()
     # Expected result: 100 / 2 / 5 = 10
     assert "result" in data and data["result"] == 10, f"Expected result 10, got {data.get('result')}"
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_list_get_update_delete_calculation(base_url: str):
     user_data = {
         "first_name": "Calc",

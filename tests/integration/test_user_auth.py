@@ -5,7 +5,7 @@ from uuid import UUID
 import pydantic_core
 from sqlalchemy.exc import IntegrityError
 from app.models.user import User
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_password_hashing(db_session, fake_user_data):
     """Test password hashing and verification functionality"""
     original_password = "TestPass123"  # Use known password for test
@@ -22,7 +22,7 @@ def test_password_hashing(db_session, fake_user_data):
     assert user.verify_password(original_password) is True
     assert user.verify_password("WrongPass123") is False
     assert hashed != original_password
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_user_registration(db_session, fake_user_data):
     """Test user registration process"""
     fake_user_data['password'] = "TestPass123"
@@ -37,7 +37,7 @@ def test_user_registration(db_session, fake_user_data):
     assert user.is_active is True
     assert user.is_verified is False
     assert user.verify_password("TestPass123") is True
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_duplicate_user_registration(db_session):
     """Test registration with duplicate email/username"""
     # First user data
@@ -66,7 +66,7 @@ def test_duplicate_user_registration(db_session):
     # Try to register second user with same email
     with pytest.raises(ValueError, match="Username or email already exists"):
         User.register(db_session, user2_data)
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_user_authentication(db_session, fake_user_data):
     """Test user authentication and token generation"""
     # Use fake_user_data from fixture
@@ -86,7 +86,7 @@ def test_user_authentication(db_session, fake_user_data):
     assert "token_type" in auth_result
     assert auth_result["token_type"] == "bearer"
     assert "user" in auth_result
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_user_last_login_update(db_session, fake_user_data):
     """Test that last_login is updated on authentication"""
     fake_user_data['password'] = "TestPass123"
@@ -98,7 +98,7 @@ def test_user_last_login_update(db_session, fake_user_data):
     auth_result = User.authenticate(db_session, fake_user_data['username'], "TestPass123")
     db_session.refresh(user)
     assert user.last_login is not None
-@pytest.mark.skip(reason="This test is currently broken")
+#@pytest.mark.skip(reason="This test is currently broken")
 def test_unique_email_username(db_session):
     """Test uniqueness constraints for email and username"""
     # Create first user with specific test data
