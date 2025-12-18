@@ -7,6 +7,7 @@ from app.models.calculation import (
     Subtraction,
     Multiplication,
     Division,
+    Exponent,
 )
 
 # Helper function to create a dummy user_id for testing.
@@ -59,6 +60,25 @@ def test_division_by_zero():
     division = Division(user_id=dummy_user_id(), inputs=inputs)
     with pytest.raises(ValueError, match="Cannot divide by zero."):
         division.get_result()
+
+def test_exponent_get_result():
+    """
+    Test that Exponent.get_result returns the correct result.
+    """
+    inputs = [2,3,2]
+    exp = Exponent(user_id=dummy_user_id(), inputs=inputs)
+    # Expected: 2 ** 3 ** 2 = 64
+    result = exp.get_result()
+    assert result == 64, f"Expected 64, got {result}"
+
+def test_exponent_by_negative():
+    """
+    Test that Exponent.get_result raises ValueError when raising to a negative number
+    """
+    inputs = [2,-1]
+    exp = Exponent(user_id=dummy_user_id(), inputs=inputs)
+    with pytest.raises(ValueError, match="Cannot raise to a negative number"):
+        exp.get_result()
 
 def test_calculation_factory_addition():
     """
@@ -134,19 +154,66 @@ def test_invalid_inputs_for_addition():
     addition = Addition(user_id=dummy_user_id(), inputs="not-a-list")
     with pytest.raises(ValueError, match="Inputs must be a list of numbers."):
         addition.get_result()
-
+def test_invalid_inputs_for_addition2():
+    """
+    Test that providing non-list inputs to Addition.get_result raises a ValueError.
+    """
+    addition = Addition(user_id=dummy_user_id(), inputs=[10])
+    with pytest.raises(ValueError, match="Inputs must be a list with at least two numbers."):
+        addition.get_result()
 def test_invalid_inputs_for_subtraction():
+    """
+    Test that providing fewer than two numbers to Subtraction.get_result raises a ValueError.
+    """
+    subtraction = Subtraction(user_id=dummy_user_id(), inputs="not-a-list")
+    with pytest.raises(ValueError, match="Inputs must be a list of numbers."):
+        subtraction.get_result()
+def test_invalid_inputs_for_subtraction2():
     """
     Test that providing fewer than two numbers to Subtraction.get_result raises a ValueError.
     """
     subtraction = Subtraction(user_id=dummy_user_id(), inputs=[10])
     with pytest.raises(ValueError, match="Inputs must be a list with at least two numbers."):
         subtraction.get_result()
-
+def test_invalid_inputs_for_multiplication():
+    """
+    Test that providing fewer than two numbers to Multiplication.get_result raises a ValueError.
+    """
+    multiplication = Multiplication(user_id=dummy_user_id(), inputs="not-a-list")
+    with pytest.raises(ValueError, match="Inputs must be a list of numbers."):
+        multiplication.get_result()
+def test_invalid_inputs_for_multiplication2():
+    """
+    Test that providing fewer than two numbers to Multiplication.get_result raises a ValueError.
+    """
+    multiplication = Multiplication(user_id=dummy_user_id(), inputs=[10])
+    with pytest.raises(ValueError, match="Inputs must be a list with at least two numbers."):
+        multiplication.get_result()
 def test_invalid_inputs_for_division():
+    """
+    Test that providing fewer than two numbers to Division.get_result raises a ValueError.
+    """
+    division = Division(user_id=dummy_user_id(), inputs="not-a-list")
+    with pytest.raises(ValueError, match="Inputs must be a list of numbers."):
+        division.get_result()
+def test_invalid_inputs_for_division2():
     """
     Test that providing fewer than two numbers to Division.get_result raises a ValueError.
     """
     division = Division(user_id=dummy_user_id(), inputs=[10])
     with pytest.raises(ValueError, match="Inputs must be a list with at least two numbers."):
         division.get_result()
+def test_invalid_inputs_for_exponent():
+    """
+    Test that providing fewer than two numbers to Exponent.get_result raises a ValueError.
+    """
+    exponent = Exponent(user_id=dummy_user_id(), inputs="not-a-list")
+    with pytest.raises(ValueError, match="Inputs must be a list of numbers."):
+        exponent.get_result()
+def test_invalid_inputs_for_exponent2():
+    """
+    Test that providing fewer than two numbers to Exponent.get_result raises a ValueError.
+    """
+    exponent = Exponent(user_id=dummy_user_id(), inputs=[10])
+    with pytest.raises(ValueError, match="Inputs must be a list with at least two number."):
+        exponent.get_result()

@@ -387,7 +387,7 @@ class Exponent(Calculation):
             raise ValueError("Inputs must be a list with at least two number.")
         result = self.inputs[0]
         for value in self.inputs[1:]:
-            if value == 0:
-                raise ValueError("Cannot divide by zero.")
-            result /= value
+            if value < 0:
+                raise ValueError("Cannot raise to a negative number")
+            result = result ** value
         return result
